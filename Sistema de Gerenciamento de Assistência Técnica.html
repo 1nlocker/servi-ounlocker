@@ -253,3 +253,370 @@
                                         <!-- Data will be loaded here -->
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+
+                        <!-- Reports Content -->
+                        <div id="reports-content" class="bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold mb-6">Relatórios</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div class="bg-white p-4 border rounded-lg shadow">
+                                    <h3 class="text-lg font-semibold mb-4">Relatório Financeiro</h3>
+                                    <p class="text-gray-600 mb-4">Visualize o desempenho financeiro dos serviços realizados.</p>
+                                    <button id="financial-report-btn" class="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                        Gerar Relatório
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white p-4 border rounded-lg shadow">
+                                    <h3 class="text-lg font-semibold mb-4">Relatório de Serviços</h3>
+                                    <p class="text-gray-600 mb-4">Acompanhe os tipos de serviços mais solicitados.</p>
+                                    <button id="services-report-btn" class="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                        Gerar Relatório
+                                    </button>
+                                </div>
+                                
+                                <div class="bg-white p-4 border rounded-lg shadow">
+                                    <h3 class="text-lg font-semibold mb-4">Relatório de Clientes</h3>
+                                    <p class="text-gray-600 mb-4">Analise o perfil dos clientes e frequência de serviços.</p>
+                                    <button id="clients-report-btn" class="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                        Gerar Relatório
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="report-content" class="hidden">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 id="report-title" class="text-lg font-semibold"></h3>
+                                    <div>
+                                        <button id="export-pdf-btn" class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-sm mr-2">
+                                            <i class="fas fa-file-pdf mr-1"></i> PDF
+                                        </button>
+                                        <button id="export-excel-btn" class="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 text-sm">
+                                            <i class="fas fa-file-excel mr-1"></i> Excel
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div id="report-chart-container" class="mb-6 h-64"></div>
+                                
+                                <div id="report-table-container" class="overflow-x-auto">
+                                    <!-- Tabela de relatório será carregada aqui -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Settings Content -->
+                        <div id="settings-content" class="bg-white p-6 rounded-lg shadow-md hidden">
+                            <h2 class="text-xl font-bold mb-6">Configurações</h2>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white p-4 border rounded-lg shadow">
+                                    <h3 class="text-lg font-semibold mb-4">Configurações do Sistema</h3>
+                                    
+                                    <form id="settings-form">
+                                        <div class="mb-4">
+                                            <label for="shop-name" class="block text-sm font-medium text-gray-700 mb-1">Nome da Loja</label>
+                                            <input type="text" id="shop-name" name="shop-name"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="shop-email" class="block text-sm font-medium text-gray-700 mb-1">E-mail para Notificações</label>
+                                            <input type="email" id="shop-email" name="shop-email"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label for="auto-notify" class="block text-sm font-medium text-gray-700 mb-1">Notificações Automáticas</label>
+                                            <select id="auto-notify" name="auto-notify"
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                <option value="always">Sempre</option>
+                                                <option value="status-change">Apenas mudança de status</option>
+                                                <option value="never">Nunca</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                            Salvar Configurações
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <div class="bg-white p-4 border rounded-lg shadow">
+                                    <h3 class="text-lg font-semibold mb-4">Integrações</h3>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-sm font-medium text-gray-700">API de Pagamento</span>
+                                            <span class="text-xs font-semibold text-red-600">Desconectado</span>
+                                        </div>
+                                        <button class="w-full px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                                            Configurar API de Pagamento
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-sm font-medium text-gray-700">API de SMS</span>
+                                            <span class="text-xs font-semibold text-red-600">Desconectado</span>
+                                        </div>
+                                        <button class="w-full px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                                            Configurar API de SMS
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <div class="flex justify-between mb-2">
+                                            <span class="text-sm font-medium text-gray-700">Backup Automático</span>
+                                            <span class="text-xs font-semibold text-green-600">Conectado</span>
+                                        </div>
+                                        <button class="w-full px-4 py-2 bg-green-100 text-green-800 rounded hover:bg-green-200">
+                                            Configurar Backup
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulário para Adicionar Cliente (Modal) -->
+    <div id="add-client-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Adicionar Novo Cliente</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeClientModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="add-client-form">
+                <div class="mb-4">
+                    <label for="client-name" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo*</label>
+                    <input type="text" id="client-name" name="client-name" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="client-email" class="block text-sm font-medium text-gray-700 mb-1">E-mail*</label>
+                    <input type="email" id="client-email" name="client-email" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="client-phone" class="block text-sm font-medium text-gray-700 mb-1">Telefone*</label>
+                    <input type="tel" id="client-phone" name="client-phone" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 mr-2" onclick="closeClientModal()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Salvar Cliente
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Formulário para Adicionar Serviço (Modal) -->
+    <div id="add-service-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Adicionar Novo Serviço</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeServiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="add-service-form">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="service-client" class="block text-sm font-medium text-gray-700 mb-1">Cliente*</label>
+                        <select id="service-client" name="service-client" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Selecione um cliente</option>
+                            <!-- Opções carregadas dinamicamente -->
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="service-type" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Serviço*</label>
+                        <select id="service-type" name="service-type" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Selecione o serviço</option>
+                            <option value="Desbloqueio">Desbloqueio</option>
+                            <option value="Troca de Tela">Troca de Tela</option>
+                            <option value="Reparo de Placa">Reparo de Placa</option>
+                            <option value="Troca de Bateria">Troca de Bateria</option>
+                            <option value="Reparo de Conector">Reparo de Conector</option>
+                            <option value="Atualização">Atualização de Software</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="service-brand" class="block text-sm font-medium text-gray-700 mb-1">Marca*</label>
+                        <select id="service-brand" name="service-brand" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Selecione a marca</option>
+                            <option value="Apple">Apple</option>
+                            <option value="Samsung">Samsung</option>
+                            <option value="Xiaomi">Xiaomi</option>
+                            <option value="Motorola">Motorola</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="service-model" class="block text-sm font-medium text-gray-700 mb-1">Modelo*</label>
+                        <input type="text" id="service-model" name="service-model" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="service-imei" class="block text-sm font-medium text-gray-700 mb-1">IMEI*</label>
+                        <input type="text" id="service-imei" name="service-imei" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="service-value" class="block text-sm font-medium text-gray-700 mb-1">Valor (R$)*</label>
+                        <input type="number" id="service-value" name="service-value" step="0.01" min="0" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="service-payment" class="block text-sm font-medium text-gray-700 mb-1">Forma de Pagamento*</label>
+                        <select id="service-payment" name="service-payment" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Selecione</option>
+                            <option value="Pix">Pix</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Parcelado">Parcelado</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="service-date" class="block text-sm font-medium text-gray-700 mb-1">Data*</label>
+                        <input type="date" id="service-date" name="service-date" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <label for="service-notes" class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+                    <textarea id="service-notes" name="service-notes" rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                
+                <div class="mt-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Foto do Aparelho</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label for="service-photo" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i class="fas fa-upload mb-3 text-gray-400 text-xl"></i>
+                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Clique para carregar</span> ou arraste e solte</p>
+                                <p class="text-xs text-gray-500">PNG, JPG ou JPEG (máx. 2MB)</p>
+                            </div>
+                            <input id="service-photo" type="file" class="hidden" accept="image/png, image/jpeg, image/jpg" />
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 mr-2" onclick="closeServiceModal()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Registrar Serviço
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de detalhes do serviço -->
+    <div id="service-details-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Detalhes do Serviço</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeServiceDetailsModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="service-details-content">
+                <!-- Conteúdo carregado dinamicamente -->
+            </div>
+            
+            <div class="flex justify-end mt-6">
+                <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300" onclick="closeServiceDetailsModal()">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Atualização de Status -->
+    <div id="status-update-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Atualizar Status do Serviço</h3>
+                <button class="text-gray-500 hover:text-gray-700" onclick="closeStatusUpdateModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="status-update-form">
+                <input type="hidden" id="status-service-id">
+                
+                <div class="mb-4">
+                    <label for="status-select" class="block text-sm font-medium text-gray-700 mb-1">Status*</label>
+                    <select id="status-select" name="status-select" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Em Processo">Em Processo</option>
+                        <option value="Concluído">Concluído</option>
+                        <option value="Rejeitado">Rejeitado</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="status-notes" class="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+                    <textarea id="status-notes" name="status-notes" rows="3"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="send-notification" class="mr-2">
+                        <span class="text-sm text-gray-700">Notificar cliente sobre a atualização</span>
+                    </label>
+                </div>
+                
+                <div class="flex justify-end mt-6">
+                    <button type="button" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 mr-2" onclick="closeStatusUpdateModal()">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        Atualizar Status
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script src="form-handlers.js"></script>
+</body>
+</html>

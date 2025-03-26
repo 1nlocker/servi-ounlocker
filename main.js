@@ -1,12 +1,12 @@
 // Configurações da API do Google
-const API_KEY = ''; // Você precisará criar uma chave de API no Console Google Cloud
-const CLIENT_ID = ''; // Você precisará obter um ID de cliente no Console Google Cloud
+const API_KEY = 'AIzaSyB5sE1VR5GAJtbOlQdZfNXvCRvwFamBbHI';
+const CLIENT_ID = '1021928456661-prts92qouqnfsjaiml1jb0csi0g9jbnb.apps.googleusercontent.com';
 const DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 const SCOPES = "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive";
 
-// IDs do Google Sheets (você precisará criar estes)
-const CLIENTS_SHEET_ID = ''; // ID da planilha de clientes
-const SERVICES_SHEET_ID = ''; // ID da planilha de serviços
+// IDs do Google Sheets
+const CLIENTS_SHEET_ID = '1C9F1BZVjPcW2diPDd0JsgGiHQ_33JYBbskTsKAXGkxU';
+const SERVICES_SHEET_ID = '1hziWBSwPGCuU7mKzgU7-bwwNQ36kavYuP5mBjF0N4oU';
 
 // Variáveis globais
 let clients = [];
@@ -440,12 +440,12 @@ function filterServices() {
 // Funções de formulários
 function showAddClientForm() {
     // Implementação do modal para adicionar cliente
-    alert('Formulário de adicionar cliente será implementado aqui');
+    document.getElementById('add-client-modal').classList.remove('hidden');
 }
 
 function showAddServiceForm() {
     // Implementação do modal para adicionar serviço
-    alert('Formulário de adicionar serviço será implementado aqui');
+    document.getElementById('add-service-modal').classList.remove('hidden');
 }
 
 // Funções para manipulação de dados
@@ -566,7 +566,77 @@ function viewServiceDetails(serviceId) {
     if (!service) return;
     
     // Exibir modal com detalhes do serviço
-    alert(`Detalhes do serviço: ${service.serviceType} para ${service.clientName}`);
+    document.getElementById('service-details-modal').classList.remove('hidden');
+    
+    const detailsContent = document.getElementById('service-details-content');
+    
+    // Formatar os detalhes do serviço
+    let statusClass = '';
+    switch (service.status) {
+        case 'Pendente':
+            statusClass = 'bg-yellow-100 text-yellow-800';
+            break;
+        case 'Em Processo':
+            statusClass = 'bg-blue-100 text-blue-800';
+            break;
+        case 'Concluído':
+            statusClass = 'bg-green-100 text-green-800';
+            break;
+        case 'Rejeitado':
+            statusClass = 'bg-red-100 text-red-800';
+            break;
+    }
+    
+    detailsContent.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+                <p class="text-sm text-gray-500">Cliente</p>
+                <p class="font-medium">${service.clientName}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Data do Pedido</p>
+                <p class="font-medium">${formatDate(service.date)}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Aparelho</p>
+                <p class="font-medium">${service.brand} ${service.model}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">IMEI</p>
+                <p class="font-medium">${service.imei}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Tipo de Serviço</p>
+                <p class="font-medium">${service.serviceType}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Status</p>
+                <p class="px-2 py-1 rounded text-xs font-semibold inline-block ${statusClass}">${service.status}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Valor</p>
+                <p class="font-medium">R$ ${service.value.toFixed(2)}</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-500">Forma de Pagamento</p>
+                <p class="font-medium">${service.paymentMethod}</p>
+            </div>
+        </div>
+        
+        <div class="mb-4">
+            <p class="text-sm text-gray-500">Observações</p>
+            <p class="p-3 bg-gray-50 rounded">${service.notes || 'Nenhuma observação registrada.'}</p>
+        </div>
+        
+        <div class="flex justify-between">
+            <button onclick="showStatusUpdateModal(${service.id})" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                <i class="fas fa-sync-alt mr-2"></i>Atualizar Status
+            </button>
+            <button onclick="createServiceInvoice(${service.id})" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                <i class="fas fa-file-invoice-dollar mr-2"></i>Gerar Recibo
+            </button>
+        </div>
+    `;
 }
 
 // Funções de envio de notificações
