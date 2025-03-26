@@ -636,7 +636,7 @@ function viewServiceDetails(serviceId) {
                 <i class="fas fa-file-invoice-dollar mr-2"></i>Gerar Recibo
             </button>
         </div>
-    `;
+    `
 }
 
 // Funções de envio de notificações
